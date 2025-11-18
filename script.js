@@ -613,11 +613,20 @@ class MealTracker {
         const dayLabels = document.createElement('div');
         dayLabels.className = 'day-labels';
         const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        
+        // Detect if we're on mobile (squares are 12px instead of 11px)
+        const isMobile = window.matchMedia('(max-width: 479px)').matches;
+        const squareSize = isMobile ? 12 : 11;
+        const gap = 3;
+        const rowHeight = squareSize + gap; // 15px on mobile, 14px on desktop
+        const verticalOffset = squareSize / 2; // Center text on square (6px on mobile, 5.5px on desktop)
+        
         days.forEach((day, index) => {
             if (index % 2 === 1) { // Only show Mon, Wed, Fri
                 const label = document.createElement('span');
                 label.textContent = day;
-                label.style.top = `${index * 14}px`;
+                // Center the label vertically on the row
+                label.style.top = `${index * rowHeight + verticalOffset}px`;
                 dayLabels.appendChild(label);
             }
         });
