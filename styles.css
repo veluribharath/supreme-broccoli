@@ -582,10 +582,186 @@ button[type="submit"]:active {
     transform: none;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
+/* ====================================
+   RESPONSIVE DESIGN - Mobile First
+   ==================================== */
+
+/* Extra Small Devices (Phones, 320px - 479px) */
+@media (max-width: 479px) {
+    body {
+        padding: 10px;
+        font-size: 14px;
+    }
+
     .container {
-        padding: 20px;
+        padding: 15px;
+        border-radius: 4px;
+    }
+
+    header {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    header p {
+        font-size: 13px;
+    }
+
+    h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    h3 {
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+
+    .graph-description {
+        font-size: 12px;
+    }
+
+    /* Forms - Larger touch targets for mobile */
+    .add-meal {
+        padding: 15px;
+        margin-bottom: 25px;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 12px; /* Larger for easier touch */
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+
+    /* Buttons - Larger touch targets */
+    button[type="submit"],
+    .btn-primary,
+    .btn-secondary,
+    .btn-warning {
+        padding: 14px 20px;
+        font-size: 16px;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .btn-text {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+
+    /* Data Management */
+    .data-management {
+        padding: 15px;
+        margin-bottom: 25px;
+    }
+
+    .data-controls {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .export-section,
+    .import-section {
+        padding: 15px;
+    }
+
+    .import-options button {
+        padding: 12px 16px;
+        font-size: 15px;
+    }
+
+    /* Meal History */
+    .meal-history {
+        padding: 15px;
+        margin-bottom: 25px;
+    }
+
+    .history-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .form-group.inline {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .form-group.inline input,
+    .form-group.inline button {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    .stats {
+        font-size: 13px;
+        text-align: center;
+        padding: 8px 0;
+    }
+
+    .meal-list {
+        max-height: 400px;
+    }
+
+    .date-header {
+        font-size: 15px;
+    }
+
+    .meal-entry {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .meal-info {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .meal-type {
+        min-width: auto;
+        font-size: 13px;
+    }
+
+    .meal-details {
+        font-size: 13px;
+    }
+
+    .meal-notes {
+        font-size: 12px;
+    }
+
+    .meal-actions {
+        width: 100%;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+
+    .btn-icon {
+        font-size: 20px;
+        padding: 8px 12px;
+    }
+
+    /* Legend */
+    .legend {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .legend h3 {
+        font-size: 15px;
     }
 
     .legend-items {
@@ -593,47 +769,309 @@ button[type="submit"]:active {
         gap: 10px;
     }
 
-    .graph-container {
-        overflow-x: scroll;
+    .legend-item {
+        font-size: 13px;
     }
 
+    /* Graphs - Mobile optimized */
+    .visualization {
+        margin-top: 20px;
+    }
+
+    .graph-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 15px 0;
+    }
+
+    #graph,
+    #detailedGraph {
+        padding-left: 35px;
+        padding-top: 25px;
+    }
+
+    .month-labels {
+        left: 35px;
+        height: 18px;
+    }
+
+    .month-labels span {
+        font-size: 10px;
+    }
+
+    .day-labels {
+        width: 30px;
+        top: 25px;
+    }
+
+    .day-labels span {
+        font-size: 10px;
+        width: 25px;
+    }
+
+    .meal-labels {
+        width: 20px;
+        top: 25px;
+    }
+
+    .meal-labels span {
+        font-size: 10px;
+        width: 18px;
+    }
+
+    /* Slightly larger squares for easier touch */
+    .day-square,
+    .meal-square {
+        width: 12px;
+        height: 12px;
+    }
+
+    .day-square:hover,
+    .meal-square:hover {
+        transform: scale(1.5);
+    }
+}
+
+/* Small Devices (Phones, 480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+    body {
+        padding: 15px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    header h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    /* Forms */
+    .form-group input,
+    .form-group select {
+        padding: 11px;
+        font-size: 15px;
+    }
+
+    /* Buttons */
+    button[type="submit"],
+    .btn-primary {
+        width: auto;
+        min-width: 140px;
+    }
+
+    .btn-secondary,
+    .btn-warning {
+        width: auto;
+    }
+
+    /* Data Management */
     .data-controls {
         grid-template-columns: 1fr;
         gap: 20px;
     }
 
+    /* Meal History */
     .history-controls {
-        flex-direction: column;
-        align-items: stretch;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
     }
 
     .form-group.inline {
-        flex-direction: column;
-        align-items: stretch;
+        flex-direction: row;
+        align-items: center;
     }
 
-    .form-group.inline input,
-    .form-group.inline button {
-        width: 100%;
-    }
-
-    .meal-info {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .meal-type {
-        min-width: auto;
+    .form-group.inline input {
+        width: auto;
+        min-width: 150px;
     }
 
     .meal-entry {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .meal-info {
+        flex-direction: row;
+        gap: 15px;
     }
 
     .meal-actions {
-        width: 100%;
-        justify-content: flex-end;
+        width: auto;
+    }
+
+    /* Legend */
+    .legend-items {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    /* Graphs */
+    .graph-container {
+        padding: 20px 0;
+    }
+}
+
+/* Medium Devices (Tablets, 768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .container {
+        padding: 25px;
+    }
+
+    header h1 {
+        font-size: 32px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    /* Data Management - Still single column for clarity */
+    .data-controls {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    /* Meal History */
+    .history-controls {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .meal-list {
+        max-height: 550px;
+    }
+
+    /* Graphs */
+    .graph-container {
+        overflow-x: auto;
+        padding: 20px 0;
+    }
+}
+
+/* Large Devices (Desktops, 1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+    .container {
+        padding: 30px;
+        max-width: 1200px;
+    }
+
+    /* Data Management - Two columns for desktop */
+    .data-controls {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    /* Optimize graph viewing */
+    .graph-container {
+        overflow-x: auto;
+    }
+
+    .meal-list {
+        max-height: 600px;
+    }
+}
+
+/* Extra Large Devices (Large Desktops, 1440px and up) */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1400px;
+        padding: 40px;
+    }
+
+    header {
+        margin-bottom: 50px;
+    }
+
+    header h1 {
+        font-size: 36px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    .add-meal {
+        padding: 25px;
+    }
+
+    .data-management {
+        padding: 25px;
+    }
+
+    .data-controls {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+
+    .meal-history {
+        padding: 25px;
+    }
+
+    .meal-list {
+        max-height: 700px;
+    }
+
+    /* More comfortable spacing for large screens */
+    .visualization {
+        margin-top: 40px;
+    }
+}
+
+/* Landscape Orientation Optimizations */
+@media (max-width: 767px) and (orientation: landscape) {
+    .container {
+        padding: 15px 20px;
+    }
+
+    .meal-list {
+        max-height: 300px;
+    }
+
+    header {
+        margin-bottom: 20px;
+    }
+
+    .add-meal,
+    .data-management,
+    .meal-history {
+        margin-bottom: 20px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background-color: white;
+        padding: 0;
+    }
+
+    .container {
+        box-shadow: none;
+        max-width: 100%;
+    }
+
+    .add-meal,
+    .data-management,
+    button,
+    .btn-icon,
+    .meal-actions {
+        display: none;
+    }
+
+    .graph-container {
+        overflow: visible;
+    }
+
+    .meal-entry:hover {
+        transform: none;
     }
 }
