@@ -59,6 +59,33 @@
             </form>
         </section>
 
+        <section class="data-management">
+            <h2>Data Management</h2>
+            <div class="data-controls">
+                <div class="export-section">
+                    <h3>Export Data</h3>
+                    <p class="description">Download your meal data as a backup file</p>
+                    <button id="exportData" class="btn-primary">
+                        <span>📥 Export All Data</span>
+                    </button>
+                </div>
+                <div class="import-section">
+                    <h3>Import Data</h3>
+                    <p class="description">Upload a previously exported file</p>
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
+                    <button id="importDataBtn" class="btn-primary">
+                        <span>📤 Import Data</span>
+                    </button>
+                    <div id="importOptions" class="import-options" style="display: none;">
+                        <p class="import-question">How would you like to import the data?</p>
+                        <button id="mergeData" class="btn-secondary">Merge with Existing</button>
+                        <button id="replaceData" class="btn-warning">Replace All Data</button>
+                        <button id="cancelImport" class="btn-text">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="meal-history">
             <h2>Meal History</h2>
             <div class="history-controls">

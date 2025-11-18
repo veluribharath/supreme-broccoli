@@ -32,6 +32,31 @@ class MealTracker {
             this.renderMealHistory();
         });
 
+        // Add export/import listeners
+        document.getElementById('exportData').addEventListener('click', () => {
+            this.exportData();
+        });
+
+        document.getElementById('importDataBtn').addEventListener('click', () => {
+            document.getElementById('importFile').click();
+        });
+
+        document.getElementById('importFile').addEventListener('change', (e) => {
+            this.handleFileSelect(e);
+        });
+
+        document.getElementById('mergeData').addEventListener('click', () => {
+            this.importData('merge');
+        });
+
+        document.getElementById('replaceData').addEventListener('click', () => {
+            this.importData('replace');
+        });
+
+        document.getElementById('cancelImport').addEventListener('click', () => {
+            this.cancelImport();
+        });
+
         // Render everything
         this.renderDailyGraph();
         this.renderDetailedGraph();
@@ -603,6 +628,107 @@ class MealTracker {
         });
 
         container.appendChild(grid);
+    }
+
+    exportData() {
+        const exportData = {
+            version: '2.0',
+            exportDate: new Date().toISOString(),
+            meals: this.meals
+        };
+
+        const dataStr = JSON.stringify(exportData, null, 2);
+        const blob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `meal-tracker-backup-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        alert('Data exported successfully!');
+    }
+
+    handleFileSelect(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const importedData = JSON.parse(e.target.result);
+
+                // Validate the data structure
+                if (!importedData.meals || typeof importedData.meals !== 'object') {
+                    throw new Error('Invalid data format');
+                }
+
+                // Store the imported data temporarily
+                this.pendingImport = importedData.meals;
+
+                // Show import options
+                document.getElementById('importOptions').style.display = 'block';
+
+            } catch (error) {
+                alert('Error reading file: Invalid file format. Please select a valid meal tracker backup file.');
+                console.error('Import error:', error);
+            }
+        };
+
+        reader.onerror = () => {
+            alert('Error reading file. Please try again.');
+        };
+
+        reader.readAsText(file);
+
+        // Reset file input
+        event.target.value = '';
+    }
+
+    importData(mode) {
+        if (!this.pendingImport) {
+            alert('No data to import. Please select a file first.');
+            return;
+        }
+
+        if (mode === 'replace') {
+            if (!confirm('This will REPLACE all your existing data. Are you sure?')) {
+                return;
+            }
+            this.meals = this.pendingImport;
+        } else if (mode === 'merge') {
+            // Merge imported data with existing data
+            // Imported data takes precedence for conflicts
+            for (const [date, dayMeals] of Object.entries(this.pendingImport)) {
+                if (!this.meals[date]) {
+                    this.meals[date] = {};
+                }
+
+                for (const [mealType, meal] of Object.entries(dayMeals)) {
+                    this.meals[date][mealType] = meal;
+                }
+            }
+        }
+
+        this.saveMeals();
+        this.renderDailyGraph();
+        this.renderDetailedGraph();
+        this.renderMealHistory();
+
+        // Hide import options
+        document.getElementById('importOptions').style.display = 'none';
+        this.pendingImport = null;
+
+        alert(`Data imported successfully using ${mode} mode!`);
+    }
+
+    cancelImport() {
+        this.pendingImport = null;
+        document.getElementById('importOptions').style.display = 'none';
+        document.getElementById('importFile').value = '';
     }
 }
 
