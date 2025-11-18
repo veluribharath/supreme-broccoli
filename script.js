@@ -442,108 +442,99 @@ class MealTracker {
         const graphContainer = document.getElementById('detailedGraph');
         graphContainer.innerHTML = '';
 
-        // Calculate date range (last 90 days)
+        // Calculate date range (last 30 days)
         const endDate = new Date();
         const startDate = new Date();
-        startDate.setDate(startDate.getDate() - 89); // 90 days including today
+        startDate.setDate(startDate.getDate() - 29); // 30 days including today
 
-        // Create grid structure
-        const weeks = this.generateWeeks(startDate, endDate);
+        // Generate array of all 30 days
+        const days = [];
+        const currentDate = new Date(startDate);
+        while (currentDate <= endDate) {
+            days.push(new Date(currentDate));
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
 
-        // Reverse weeks array to show newest on the left
-        const reversedWeeks = weeks.reverse();
+        // Reverse to show newest on the left
+        const reversedDays = days.reverse();
 
         // Create month labels
         const monthLabels = document.createElement('div');
-        monthLabels.className = 'month-labels';
+        monthLabels.className = 'month-labels-detailed';
 
         let lastMonth = -1;
-        reversedWeeks.forEach((week, weekIndex) => {
-            const firstDay = week.find(day => day !== null);
-            if (firstDay) {
-                const month = firstDay.getMonth();
-                if (month !== lastMonth && weekIndex > 0) {
-                    const label = document.createElement('span');
-                    label.textContent = firstDay.toLocaleDateString('en-US', { month: 'short' });
-                    label.style.left = `${weekIndex * 44}px`;
-                    monthLabels.appendChild(label);
-                    lastMonth = month;
-                }
+        reversedDays.forEach((date, dayIndex) => {
+            const month = date.getMonth();
+            if (month !== lastMonth && dayIndex > 0) {
+                const label = document.createElement('span');
+                label.textContent = date.toLocaleDateString('en-US', { month: 'short' });
+                label.style.left = `${dayIndex * 14}px`;
+                monthLabels.appendChild(label);
+                lastMonth = month;
             }
         });
         graphContainer.appendChild(monthLabels);
 
         // Create meal type labels
         const mealLabels = document.createElement('div');
-        mealLabels.className = 'meal-labels';
-        const meals = ['B', 'L', 'D'];
-        meals.forEach((meal, index) => {
+        mealLabels.className = 'meal-labels-detailed';
+        const mealTypes = [
+            { label: 'Breakfast', type: 'breakfast' },
+            { label: 'Lunch', type: 'lunch' },
+            { label: 'Dinner', type: 'dinner' }
+        ];
+        mealTypes.forEach((meal, index) => {
             const label = document.createElement('span');
-            label.textContent = meal;
+            label.textContent = meal.label;
             label.style.top = `${index * 14}px`;
             mealLabels.appendChild(label);
         });
         graphContainer.appendChild(mealLabels);
 
-        // Create the grid
+        // Create the grid - 3 rows x 30 columns
         const grid = document.createElement('div');
-        grid.className = 'contribution-grid detailed';
+        grid.className = 'detailed-meal-grid';
 
-        reversedWeeks.forEach(week => {
-            const weekColumn = document.createElement('div');
-            weekColumn.className = 'week-column-detailed';
+        // Create 3 rows (one for each meal type)
+        ['breakfast', 'lunch', 'dinner'].forEach(mealType => {
+            const row = document.createElement('div');
+            row.className = 'meal-row';
 
-            week.forEach(date => {
-                const dayContainer = document.createElement('div');
-                dayContainer.className = 'day-container';
+            // Create 30 columns (one for each day)
+            reversedDays.forEach(date => {
+                const dateStr = date.toISOString().split('T')[0];
+                const dayMeals = this.meals[dateStr] || {};
+                const meal = dayMeals[mealType];
 
-                if (date) {
-                    const dateStr = date.toISOString().split('T')[0];
-                    const dayMeals = this.meals[dateStr] || {};
+                const mealSquare = document.createElement('div');
+                mealSquare.className = 'meal-square';
 
-                    // Create squares for breakfast, lunch, dinner
-                    ['breakfast', 'lunch', 'dinner'].forEach(mealType => {
-                        const mealSquare = document.createElement('div');
-                        mealSquare.className = 'meal-square';
+                const mealClass = this.getMealClass(meal);
+                mealSquare.classList.add(mealClass);
 
-                        const meal = dayMeals[mealType];
-                        const mealClass = this.getMealClass(meal);
-                        mealSquare.classList.add(mealClass);
+                // Add tooltip
+                let tooltip = `${date.toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric'
+                })} - ${mealType.charAt(0).toUpperCase() + mealType.slice(1)}\n`;
 
-                        // Add tooltip
-                        let tooltip = `${date.toLocaleDateString('en-US', {
-                            weekday: 'short',
-                            month: 'short',
-                            day: 'numeric'
-                        })} - ${mealType.charAt(0).toUpperCase() + mealType.slice(1)}\n`;
-
-                        if (meal) {
-                            if (meal.skipped) {
-                                tooltip += 'Skipped';
-                            } else {
-                                tooltip += `${meal.location} - ${meal.healthiness}`;
-                                if (meal.notes) tooltip += `\n${meal.notes}`;
-                            }
-                        } else {
-                            tooltip += 'Not logged';
-                        }
-
-                        mealSquare.title = tooltip;
-                        dayContainer.appendChild(mealSquare);
-                    });
-                } else {
-                    // Empty day (padding)
-                    for (let i = 0; i < 3; i++) {
-                        const emptySquare = document.createElement('div');
-                        emptySquare.className = 'meal-square empty';
-                        dayContainer.appendChild(emptySquare);
+                if (meal) {
+                    if (meal.skipped) {
+                        tooltip += 'Skipped';
+                    } else {
+                        tooltip += `${meal.location} - ${meal.healthiness}`;
+                        if (meal.notes) tooltip += `\n${meal.notes}`;
                     }
+                } else {
+                    tooltip += 'Not logged';
                 }
 
-                weekColumn.appendChild(dayContainer);
+                mealSquare.title = tooltip;
+                row.appendChild(mealSquare);
             });
 
-            grid.appendChild(weekColumn);
+            grid.appendChild(row);
         });
 
         graphContainer.appendChild(grid);

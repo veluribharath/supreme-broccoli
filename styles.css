@@ -568,38 +568,50 @@ button[type="submit"]:active {
 }
 
 #detailedGraph {
-    padding-left: 30px;
+    position: relative;
+    display: inline-block;
+    padding-left: 80px;
+    padding-top: 30px;
 }
 
-.meal-labels {
+.month-labels-detailed {
+    position: absolute;
+    top: 0;
+    left: 80px;
+    height: 20px;
+    display: flex;
+}
+
+.month-labels-detailed span {
+    position: absolute;
+    font-size: 11px;
+    color: #586069;
+}
+
+.meal-labels-detailed {
     position: absolute;
     left: 0;
     top: 30px;
-    width: 25px;
+    width: 75px;
 }
 
-.meal-labels span {
+.meal-labels-detailed span {
     position: absolute;
     font-size: 11px;
     color: #586069;
     font-weight: 600;
     text-align: right;
-    width: 20px;
+    width: 70px;
 }
 
-.contribution-grid.detailed {
-    gap: 3px;
-}
-
-.week-column-detailed {
+.detailed-meal-grid {
     display: flex;
     flex-direction: column;
     gap: 3px;
 }
 
-.day-container {
+.meal-row {
     display: flex;
-    flex-direction: column;
     gap: 3px;
 }
 
@@ -856,14 +868,28 @@ button[type="submit"]:active {
         right: 5px;
     }
 
-    .meal-labels {
-        width: 20px;
+    .meal-labels-detailed {
+        width: 70px;
         top: 25px;
     }
 
-    .meal-labels span {
+    .meal-labels-detailed span {
         font-size: 10px;
-        width: 18px;
+        width: 65px;
+    }
+
+    #detailedGraph {
+        padding-left: 75px;
+        padding-top: 25px;
+    }
+
+    .month-labels-detailed {
+        left: 75px;
+        height: 18px;
+    }
+
+    .month-labels-detailed span {
+        font-size: 10px;
     }
 
     /* Slightly larger squares for easier touch */
