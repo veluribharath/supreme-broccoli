@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Meal Tracker</h1>
+            <p>Track your daily meals and visualize your eating habits</p>
+        </header>
+
+        <section class="add-meal">
+            <h2>Log a Meal</h2>
+            <form id="mealForm">
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mealType">Meal Type:</label>
+                    <select id="mealType" required>
+                        <option value="">Select meal type</option>
+                        <option value="breakfast">Breakfast</option>
+                        <option value="lunch">Lunch</option>
+                        <option value="dinner">Dinner</option>
+                        <option value="skipped">Skipped Meal</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="locationGroup">
+                    <label for="location">Location:</label>
+                    <select id="location">
+                        <option value="">Select location</option>
+                        <option value="home">Home</option>
+                        <option value="outside">Outside</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="healthinessGroup">
+                    <label for="healthiness">Healthiness:</label>
+                    <select id="healthiness">
+                        <option value="">Select healthiness</option>
+                        <option value="healthy">Healthy</option>
+                        <option value="unhealthy">Unhealthy</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Notes (optional):</label>
+                    <input type="text" id="notes" placeholder="What did you eat?">
+                </div>
+
+                <button type="submit">Log Meal</button>
+            </form>
+        </section>
+
+        <section class="meal-history">
+            <h2>Meal History</h2>
+            <div class="history-controls">
+                <div class="form-group inline">
+                    <label for="filterDate">Filter by Date:</label>
+                    <input type="date" id="filterDate">
+                    <button id="clearFilter" class="btn-secondary">Show All</button>
+                </div>
+                <div class="stats">
+                    <span id="totalMeals">Total meals logged: 0</span>
+                </div>
+            </div>
+            <div id="mealHistoryList" class="meal-list"></div>
+        </section>
+
+        <section class="legend">
+            <h3>Legend</h3>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <span class="legend-box home-healthy"></span>
+                    <span>Home - Healthy</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-box home-unhealthy"></span>
+                    <span>Home - Unhealthy</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-box outside-healthy"></span>
+                    <span>Outside - Healthy</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-box outside-unhealthy"></span>
+                    <span>Outside - Unhealthy</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-box meal-skipped"></span>
+                    <span>Meal Skipped</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-box no-data"></span>
+                    <span>No data</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="visualization">
+            <h2>Daily Overview (Last 365 Days)</h2>
+            <p class="graph-description">Shows the overall quality of your eating for each day</p>
+            <div class="graph-container">
+                <div id="dailyGraph"></div>
+            </div>
+        </section>
+
+        <section class="visualization">
+            <h2>Detailed Meal Tracking (Last 90 Days)</h2>
+            <p class="graph-description">Track individual meals: Breakfast, Lunch, and Dinner</p>
+            <div class="graph-container detailed">
+                <div id="detailedGraph"></div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
