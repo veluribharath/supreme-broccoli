@@ -2,6 +2,7 @@
 class MealTracker {
     constructor() {
         this.meals = this.loadMeals();
+        this.currentPeriod = 30; // Default to 1 month
         this.init();
     }
 
@@ -55,6 +56,21 @@ class MealTracker {
 
         document.getElementById('cancelImport').addEventListener('click', () => {
             this.cancelImport();
+        });
+
+        // Add time period control listeners
+        document.querySelectorAll('.period-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const period = parseInt(e.currentTarget.dataset.period);
+                this.currentPeriod = period;
+
+                // Update active state
+                document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+                e.currentTarget.classList.add('active');
+
+                // Re-render the graph
+                this.renderDailyGraph();
+            });
         });
 
         // Render everything
@@ -375,10 +391,10 @@ class MealTracker {
         const graphContainer = document.getElementById('dailyGraph');
         graphContainer.innerHTML = '';
 
-        // Calculate date range (last 365 days)
+        // Calculate date range based on current period
         const endDate = new Date();
         const startDate = new Date();
-        startDate.setDate(startDate.getDate() - 364); // 365 days including today
+        startDate.setDate(startDate.getDate() - (this.currentPeriod - 1)); // Including today
 
         this.renderContributionGrid(graphContainer, startDate, endDate, (date) => {
             const dateStr = date.toISOString().split('T')[0];
@@ -434,12 +450,15 @@ class MealTracker {
         // Create grid structure
         const weeks = this.generateWeeks(startDate, endDate);
 
+        // Reverse weeks array to show newest on the left
+        const reversedWeeks = weeks.reverse();
+
         // Create month labels
         const monthLabels = document.createElement('div');
         monthLabels.className = 'month-labels';
 
         let lastMonth = -1;
-        weeks.forEach((week, weekIndex) => {
+        reversedWeeks.forEach((week, weekIndex) => {
             const firstDay = week.find(day => day !== null);
             if (firstDay) {
                 const month = firstDay.getMonth();
@@ -470,7 +489,7 @@ class MealTracker {
         const grid = document.createElement('div');
         grid.className = 'contribution-grid detailed';
 
-        weeks.forEach(week => {
+        reversedWeeks.forEach(week => {
             const weekColumn = document.createElement('div');
             weekColumn.className = 'week-column-detailed';
 
@@ -567,12 +586,15 @@ class MealTracker {
     renderContributionGrid(container, startDate, endDate, getClassFn, getTooltipFn) {
         const weeks = this.generateWeeks(startDate, endDate);
 
+        // Reverse weeks array to show newest on the left
+        const reversedWeeks = weeks.reverse();
+
         // Create month labels
         const monthLabels = document.createElement('div');
         monthLabels.className = 'month-labels';
 
         let lastMonth = -1;
-        weeks.forEach((week, weekIndex) => {
+        reversedWeeks.forEach((week, weekIndex) => {
             const firstDay = week.find(day => day !== null);
             if (firstDay) {
                 const month = firstDay.getMonth();
@@ -605,7 +627,7 @@ class MealTracker {
         const grid = document.createElement('div');
         grid.className = 'contribution-grid';
 
-        weeks.forEach(week => {
+        reversedWeeks.forEach(week => {
             const weekColumn = document.createElement('div');
             weekColumn.className = 'week-column';
 

@@ -420,6 +420,49 @@ button[type="submit"]:active {
     margin-top: 30px;
 }
 
+.visualization-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.time-period-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.period-btn {
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 32px;
+}
+
+.period-btn:hover {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+.period-btn.active {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: white;
+}
+
+.period-btn svg {
+    display: block;
+}
+
 .graph-container {
     overflow-x: auto;
     padding: 20px 0;

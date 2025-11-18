@@ -132,8 +132,29 @@
         </section>
 
         <section class="visualization">
-            <h2>Daily Overview (Last 365 Days)</h2>
-            <p class="graph-description">Shows the overall quality of your eating for each day</p>
+            <div class="visualization-header">
+                <div>
+                    <h2>Daily Overview</h2>
+                    <p class="graph-description">Shows the overall quality of your eating for each day</p>
+                </div>
+                <div class="time-period-controls">
+                    <button class="period-btn" data-period="7" title="1 Week">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="bold" fill="currentColor">1W</text>
+                        </svg>
+                    </button>
+                    <button class="period-btn active" data-period="30" title="1 Month">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="bold" fill="currentColor">1M</text>
+                        </svg>
+                    </button>
+                    <button class="period-btn" data-period="365" title="1 Year">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="bold" fill="currentColor">1Y</text>
+                        </svg>
+                    </button>
+                </div>
+            </div>
             <div class="graph-container">
                 <div id="dailyGraph"></div>
             </div>
